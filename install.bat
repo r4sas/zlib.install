@@ -23,6 +23,9 @@ call :cleanup_log
 copy /y nul %LOGFILE% >nul 2>&1
 call :log_sysinfo >>%LOGFILE% 2>&1
 
+if not defined BUILD_TYPE (
+    set BUILD_TYPE=Release
+)
 if not defined ARCH (
     set ARCH=x64
 )
@@ -79,11 +82,11 @@ rd /S /Q %BUILD_DIR% >nul 2>&1
 mkdir %BUILD_DIR% && cd /d %BUILD_DIR%
 
 echo|set /p="[5/6] Configuring... "
-"%CMAKE%" .. -DCMAKE_BUILD_TYPE=Release %PREFIX% %GENERATOR_PLATFORM_ARG% >>%LOGFILE% 2>&1
+"%CMAKE%" .. -DCMAKE_BUILD_TYPE=%BUILD_TYPE% %PREFIX% %GENERATOR_PLATFORM_ARG% >>%LOGFILE% 2>&1
 if %ERRORLEVEL% NEQ 0 (call :failed && exit /B 1) else (echo done.)
 
 echo [6/6] Compiling and installing...
-"%CMAKE%" --build . --config Release --target install
+"%CMAKE%" --build . --config %BUILD_TYPE% --target install
 if %ERRORLEVEL% NEQ 0 (call :failed && exit /B 1) else (echo done.)
 
 call :cleanup_src
