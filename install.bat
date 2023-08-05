@@ -15,7 +15,7 @@ set ABS_ZIPFILE=%TMPDIR%\%ZIPFILE%
 set BUILD_DIR=%SRC_DIR%\build
 set LOGFILE=%TMPDIR%\zlib_install.log
 
-echo [0/6] Library(zlib==%VERSION%)
+echo [0/6] Library (zlib==%VERSION%)
 
 if not exist %TMPDIR% (mkdir %TMPDIR% && cd /d %TMPDIR% || exit /B 1)
 call :cleanup_src
@@ -81,7 +81,7 @@ if %ERRORLEVEL% NEQ 0 (call :failed && exit /B 1) else (echo done.)
 rd /S /Q %BUILD_DIR% >nul 2>&1
 mkdir %BUILD_DIR% && cd /d %BUILD_DIR%
 
-echo|set /p="[5/6] Configuring... "
+echo|set /p="[5/6] Configuring... (%BUILD_TYPE%)"
 "%CMAKE%" .. -DCMAKE_BUILD_TYPE=%BUILD_TYPE% %PREFIX% %GENERATOR_PLATFORM_ARG% >>%LOGFILE% 2>&1
 if %ERRORLEVEL% NEQ 0 (call :failed && exit /B 1) else (echo done.)
 
