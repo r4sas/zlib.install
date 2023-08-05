@@ -81,7 +81,7 @@ if %ERRORLEVEL% NEQ 0 (call :failed && exit /B 1) else (echo done.)
 rd /S /Q %BUILD_DIR% >nul 2>&1
 mkdir %BUILD_DIR% && cd /d %BUILD_DIR%
 
-echo|set /p="[5/6] Configuring... (%BUILD_TYPE%)"
+echo|set /p="[5/6] Configuring (%BUILD_TYPE%)... "
 "%CMAKE%" .. -DCMAKE_BUILD_TYPE=%BUILD_TYPE% %PREFIX% %GENERATOR_PLATFORM_ARG% >>%LOGFILE% 2>&1
 if %ERRORLEVEL% NEQ 0 (call :failed && exit /B 1) else (echo done.)
 
